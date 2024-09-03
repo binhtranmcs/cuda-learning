@@ -1,0 +1,39 @@
+1. No since each element is used only once.
+
+2.
+
+3.
+  - Read outdated value in smem (read after write)
+  - Write to currently being used smem (write after read)
+
+4. Shared memory is shared across threads in a block -> ability to reuse data
+
+5. (N + 31) / 32
+
+6. 512000
+
+7. 1000
+
+8.
+  a. N
+  b. (N + T - 1) / T
+
+9.
+  a. 200 / 36 > 100 / 4 / 7 -> compute bound
+  b. 300 / 36 < 250 / 4 / 7 -> memory bound
+
+10. TODO
+  a. BLOCK_SIZE=BLOCK_DIM
+  b. need to check baseIdx boundary
+
+11.
+  a. 1024
+  b. 1024
+  c. 8
+  d. 8
+  e. 129 * 4 = 516
+  f. TODO
+
+12.
+  a. 32 * 4 = 128KB > 96KB shared memory limit -> no.
+  b. yes.
