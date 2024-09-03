@@ -1,0 +1,37 @@
+1.
+  a. 128 / 32 = 4
+  b. 4 * 8(blocks) = 32
+  c.
+    i. 3 * 8(blocks) = 24 (3 warps per block are 0-31, 32-63, 96-127)
+    ii. 2 * 8(blocks) = 16 (2 warps per block are 32-63, 96-127)
+    iii. 100%
+    iv. 8 / 32 = 25%
+    v. 24 / 32 = 75%
+  d.
+    i. 4 * 8(blocks) = 32
+    ii. 4 * 8(blocks) = 32
+    iii. 50%
+  e.
+    i. 3 (j = 0,1,2)
+    ii. 2 (j=3,4)
+
+2. 2048
+
+3. 1
+
+4. 1 - (2+2.3+3+2.8+2.4+1.9+2.6+2.9)/(3*8) = 0.17
+
+5. No:
+  - Launching only 32 threads per block cannot saturate the gpu.
+  - Using shared memory still needs synchronization.
+
+6. c
+
+7. all are possible, occupancy level of abc is 50%, de is 100%.
+
+8.
+  a. 100% occupancy
+  b. 50% occupancy (32 * 32 / 2048)
+  c. rmem limit, 87.5% occupancy (7/8 blocks are launchable)
+
+9. not possible since 32 * 32 = 1024 > 512, the limit of threads per block.
