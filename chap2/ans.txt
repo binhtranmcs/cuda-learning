@@ -1,15 +1,24 @@
-1C: i = blockIdx.x * blockDim.x + threadIdx.x
-2C: i = (blockIdx.x + blockDim.x + threadIdx.x) * 2
-3D: i = blockIdx.x + blockDim.x * 2 + threadIdx.x
-4C: 8192
-5D: v * sizeof(int)
-6D: (void **)&A_d
-7C: cudaMemCpy(A_d, A_h, 3000, cudaMemCpyHostToDevice)
-8C: cudaError_t err
+1. c: i = blockIdx.x * blockDim.x + threadIdx.x
+
+2. c: i = (blockIdx.x + blockDim.x + threadIdx.x) * 2
+
+3. d: i = blockIdx.x + blockDim.x * 2 + threadIdx.x
+
+4. c: 8192
+
+5. d: v * sizeof(int)
+
+6. d: (void **)&A_d
+
+7. c: cudaMemCpy(A_d, A_h, 3000, cudaMemCpyHostToDevice)
+
+8. c: cudaError_t err
+
 9.
-  a) 128
-  b) 200064
-  c) 1563
-  d) 200064
-  e) 200000
+  a. 128
+  b. 200064
+  c. 1563
+  d. 200064
+  e. 200000
+
 10.
