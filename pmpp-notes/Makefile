@@ -12,3 +12,8 @@ c3_e2:
 	nvcc chap3/ex2.cu -o c3_e2.out
 	./c3_e2.out
 	rm c3_e2.out
+
+c10_ex:
+	nvcc chap10/sum_reduction.cu -o c10_ex.out
+	./c10_ex.out
+	rm c10_ex.out
