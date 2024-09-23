@@ -15,7 +15,6 @@ void SumReduction(const int *input, int n, int *output) {
 __global__ void SimpleSumReductionKernel(int *input, int n, int *output) {
   unsigned int i = 2 * threadIdx.x;
   for (int stride = 1; stride <= blockDim.x; stride *= 2) {
-    printf("%d %d", blockDim.x, input[i]);
     if (threadIdx.x % stride == 0 && i + stride < n) {
       input[i] += input[i + stride];
     }
