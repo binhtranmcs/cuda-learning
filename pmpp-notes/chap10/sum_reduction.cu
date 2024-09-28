@@ -3,12 +3,12 @@
 #include <bits/stdc++.h>
 
 
-void SumReduction(const int *input, int n, int *output) {
+int SumReduction(const int *input, int n) {
   int sum = 0;
   for (int i = 0; i < n; ++i) {
     sum += input[i];
   }
-  *output = sum;
+  return sum;
 }
 
 
@@ -26,10 +26,10 @@ __global__ void SimpleSumReductionKernel(int *input, int n, int *output) {
 }
 
 
-int main() {
-  int n = 32;
+void TestSimpleSumReductionKernel() {
+  int n = 1024;
   std::vector<int> h_inp(n, 1);
-  // std::iota(h_inp.begin(), h_inp.end(), 0);
+  std::iota(h_inp.begin(), h_inp.end(), 0);
   int h_out{12};
 
   int *d_inp, *d_out;
@@ -38,7 +38,19 @@ int main() {
   cudaMalloc(&d_out, sizeof(int));
 
   SimpleSumReductionKernel<<<1, n / 2>>>(d_inp, n, d_out);
+  int gt = SumReduction(h_inp.data(), n);
+  
   cudaMemcpy(&h_out, d_out, sizeof(int), cudaMemcpyDeviceToHost);
+  cudaFree(d_inp);
+  cudaFree(d_out);
+  
   cudaDeviceSynchronize();
-  std::cout << "sum reduction: " << h_out << '\n';
+
+  std::cout << "SumReduction: " << h_out << ' ' << gt << '\n';
+  assert(h_out == gt);
+}
+
+
+int main() {
+  TestSimpleSumReductionKernel();
 }
