@@ -33,9 +33,9 @@ int main() {
   std::vector<int> h_a(N * N), h_b(N * N), h_c(N * N);
   for (int i = 0; i < N; i++) {
     for (int j = 0; j < N; j++) {
-      h_a[i * N + j] = h_b[i * N + j] = 1;
-      //      h_a[i * N + j] = rand() % 100;
-      //      h_b[i * N + j] = rand() % 100;
+//      h_a[i * N + j] = h_b[i * N + j] = 1;
+      h_a[i * N + j] = rand() % 10;
+      h_b[i * N + j] = rand() % 10;
     }
   }
 
