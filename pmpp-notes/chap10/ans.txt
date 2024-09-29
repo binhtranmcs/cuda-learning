@@ -1,0 +1,19 @@
+1. 512 / 32 = 16 warps launched. During 5th iteration, stride is 2^4=16, so each warp only has the first thread active.
+So all 16 warps have divergence.
+
+2. 512 / 32 = 16 warps launched. During 5th iteration, stride = 16, so only the first 16 threads are active.
+So only the first warp has divergence.
+
+5. See SumReductionKernel4 kernel.
+
+6.
+  a.
+    - [6 2 7 4 5 8 3 1]
+    - [8 2 11 4 13 8 4 1]
+    - [19 2 11 4 17 8 4 1]
+    - [36 2 11 4 17 8 4 1]
+  b.
+    - [6 2 7 4 5 8 3 1]
+    - [11 10 10 5 5 8 3 1]
+    - [21 15 10 5 5 8 3 1]
+    - [36 15 10 5 5 8 3 1]

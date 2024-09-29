@@ -3,11 +3,11 @@
 #include <bits/stdc++.h>
 
 
-const int N = 1024;
+const int N = 917;
 const int BLOCK_DIM = 512;
 
 
-const int MN = 256 * 512;
+const int MN = 1000351;
 const int MBLOCK_DIM = 256;
 const int CF = 4;
 
@@ -73,7 +73,7 @@ __global__ void SumReductionKernel3(int *input, int n, int *output) {
   for (int stride = MBLOCK_DIM / 2; stride >= 1; stride /= 2) {
     __syncthreads();
     // printf("??? %d %d\n", t, smem[t]);
-    if (t < stride && t + stride < n) {
+    if (t < stride && t + stride < MBLOCK_DIM) {
       smem[t] += smem[t + stride];
     }
   }
@@ -92,7 +92,7 @@ __global__ void SumReductionKernel4(int *input, int n, int *output) {
     sum += input[i + MBLOCK_DIM * cf];
   }
   smem[t] = sum;
-  for (int stride = BLOCK_DIM / 2; stride >= 1; stride /= 2) {
+  for (int stride = MBLOCK_DIM / 2; stride >= 1; stride /= 2) {
     __syncthreads();
     if (t < stride && t + stride < n) {
       smem[t] += smem[t + stride];
@@ -116,7 +116,7 @@ void TestSingleBlockKernel() {
 
   // SumReductionKernel0<<<1, n / 2>>>(d_inp, n, d_out);
   // SumReductionKernel1<<<1, BLOCK_DIM>>>(d_inp, N, d_out);
-  SumReductionKernel2<<<1, BLOCK_DIM>>>(d_inp, N, d_out);
+  SumReductionKernel1<<<1, BLOCK_DIM>>>(d_inp, N, d_out);
   int gt = SumReduction(h_inp.data(), N);
 
   cudaMemcpy(&h_out, d_out, sizeof(int), cudaMemcpyDeviceToHost);
@@ -132,7 +132,7 @@ void TestSingleBlockKernel() {
 
 void TestMultiBlockKernel() {
   std::vector<int> h_inp(MN, 1);
-  // std::iota(h_inp.begin(), h_inp.end(), 0);
+  for (int& val : h_inp) val = rand() % 5;
   int h_out{12};
 
   int *d_inp, *d_out;
@@ -140,6 +140,7 @@ void TestMultiBlockKernel() {
   cudaMemcpy(d_inp, h_inp.data(), MN * sizeof(int), cudaMemcpyHostToDevice);
   cudaMalloc(&d_out, sizeof(int));
 
+  // SumReductionKernel3<<<(MN + MBLOCK_DIM - 1) / MBLOCK_DIM, MBLOCK_DIM>>>(d_inp, MN, d_out);
   int num_blocks = (MN + MBLOCK_DIM * CF - 1) / MBLOCK_DIM / CF;
   SumReductionKernel4<<<num_blocks, MBLOCK_DIM>>>(d_inp, MN, d_out);
   int gt = SumReduction(h_inp.data(), MN);

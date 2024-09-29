@@ -32,3 +32,13 @@ c10_ex:
 	nvcc chap10/sum_reduction.cu -o c10_ex.out ${CXXFLAGS}
 	./c10_ex.out
 	rm c10_ex.out
+
+c10_ex3:
+	nvcc chap10/ex3.cu -o c10_ex3.out ${CXXFLAGS}
+	./c10_ex3.out
+	rm c10_ex3.out
+
+c10_ex4:
+	nvcc chap10/ex4.cu -o c10_ex4.out ${CXXFLAGS}
+	./c10_ex4.out
+	rm c10_ex4.out
