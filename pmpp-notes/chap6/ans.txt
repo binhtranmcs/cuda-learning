@@ -1,0 +1,19 @@
+1. See coffeebeforearch/02_mat_mul/mat_mul.h.
+
+2. TODO
+
+3.
+  a. coalesced.
+  b. coalesced.
+  c. coalesced.
+  d. uncoalesced.
+  e. coalesced.
+  f. coalesced.
+  g. coalesced.
+  h. uncoalesced.
+  i. uncoalesced.
+
+4.
+  a.
+  b.
+  c.
